@@ -2,6 +2,7 @@ package biblioteca;
 
 public class directorio extends libro{
     libro info[] = new libro[10];//espacio para 10 Libros
+    libro prestamo[] = new libro[10];
     int entradas = 0;
     String PalabraClave;
     int seleccion;
@@ -12,6 +13,14 @@ public class directorio extends libro{
 
     public void setSeleccion(int seleccion) {
         this.seleccion = seleccion;
+    }
+
+    public String getPalabraClave() {
+        return PalabraClave;
+    }
+
+    public void setPalabraClave(String PalabraClave) {
+        this.PalabraClave = PalabraClave;
     }
     
     
@@ -105,8 +114,16 @@ public class directorio extends libro{
             }
         }
         
-        public void Menu(){
+        public void Menu1(){
             info[entradas] = new directorio();
+            System.out.println("Seleccione la accion a realizar");
+            System.out.println("1. Ajustes Datos Libros");
+            System.out.println("2. Prestamos");
+            seleccion = teclado.nextInt();
+                       
+        }
+        
+        public void Menu2(){
             System.out.println("Seleccione la accion a realizar");
             System.out.println("1. Ingresar Libro");
             System.out.println("2. Actualizar Libro");
@@ -114,5 +131,76 @@ public class directorio extends libro{
             System.out.println("4. Buscar Libro");
             seleccion = teclado.nextInt();
                        
+        }
+        
+        public void Menu3(){
+            System.out.println("Seleccione la accion a realizar");
+            System.out.println("1. Prestar Libro");
+            System.out.println("2. Devolver Libro");
+            System.out.println("3. Libros prestados");
+            seleccion = teclado.nextInt();                       
+        }
+        
+        public void Prestamos(){
+            int id;
+            id=buscar();
+            if(id==-1){
+                System.out.println("No encontrado");
+            }
+            else{
+                if(info[id].cantidad==0){
+                    System.out.println("No hay mas de este libro");
+                }
+                else{
+                    info[id].cantidad= info[id].cantidad-1;
+                    prestamo[id].nombre = info[id].nombre;
+                    prestamo[id].autor = info[id].autor;
+                    prestamo[id].AñoDePublicacion = info[id].AñoDePublicacion;
+                    prestamo[id].codigo = info[id].codigo;
+                    prestamo[id].cantidad = prestamo[id].cantidad+1;
+                    prestamo[id].area = info[id].area;
+                }
+            }
+        }
+        
+        public void Devolver(){
+            int id;
+            id=buscar();
+            if(id==-1){
+                System.out.println("No encontrado");
+            }
+            else{
+                info[id].cantidad= info[id].cantidad+1;
+                prestamo[id].cantidad = prestamo[id].cantidad-1;
+            }
+        }
+        
+        public void LibrosPrestados(){
+            for(int i=0; i<10;i++){
+                if(prestamo[i].cantidad==0){
+                    
+                }
+                else{
+                System.out.println("Nombre: "+prestamo[i].nombre);
+                System.out.println("Autor: "+prestamo[i].autor);
+                System.out.println("Año de publicacion; "+prestamo[i].AñoDePublicacion);
+                System.out.println("Código: "+prestamo[i].codigo);
+                System.out.println("Cantidad: "+prestamo[i].cantidad);
+                System.out.println("Area: "+prestamo[i].area);
+                System.out.println();
+                }
+            }
+        }
+        
+        public void Llenar(){
+            for(int i=0; i<10;i++){
+                prestamo[i] = new directorio();
+                prestamo[i].nombre = "null";
+                prestamo[i].autor = "null";
+                prestamo[i].AñoDePublicacion = 0;
+                prestamo[i].codigo = "null";
+                prestamo[i].cantidad = 0;
+                prestamo[i].area = "null";
+            }
         }
 }
